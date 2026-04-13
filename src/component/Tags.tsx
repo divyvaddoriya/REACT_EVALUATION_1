@@ -38,10 +38,12 @@ const Tags = () => {
     }
 
     const handleChange = (e) => {
+        setError("")
         setCurrTag(e.target.value)
     }
 
     const handleRemove = (data) => {
+        setError("")
         setTags((prev)=>prev.filter((tag) => tag.data != data))
     }
   return (
