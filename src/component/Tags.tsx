@@ -19,24 +19,25 @@ const Tags = () => {
         setTags((prev) => { 
             const find = prev?.find((tag) => tag.data == currTag.trim())
         if(find){
-            
+            setCurrTag("")
             setError("it exist") 
+            return [...prev]
+        }else if(currTag.trim() ==""){
+            setError("cant add empty")
             return [...prev]
         }
         else if(tags.length == 10 ) {
             setError("limit reached can only add 10 tags")
             return [...prev]
         }else{
-
-            setError("")
             setCurrTag("")
         }
+        setError("")
         return [...prev , {data: currTag.trim()}]})
         }
     }
 
     const handleChange = (e) => {
-        setError("")
         setCurrTag(e.target.value)
     }
 
@@ -46,18 +47,19 @@ const Tags = () => {
   return (
     <div>
         <input type="text" disabled={tags?.length == 10 ? true : false} value={currTag} onChange={handleChange} onKeyDown={handleKeyDown}  />
+<div style={{display:"flex" , alignItems:"center" , gap:"10px"}}>
 
         {tags?.map((tag) => {
-            return <div key={tag.data}>
+            return <div style={{color: "black" ,width:"50px", backgroundColor:"white", height: "50px", border:"1px solid white"}} key={tag.data}>
                 {tag.data}
-                <button onClick={() => handleRemove(tag.data)}>X</button>
+                <button style={{background:"white",width:"15px",display:"flex" , alignContent:"center" , height:"15px", color:"red"}}  onClick={() => handleRemove(tag.data)}>X</button>
             </div>
         })}
+        </div>
 
-        {error != "" &&
-<div style={{color:"red"}}>{error}</div> 
-        }
-
+       
+{error && <div style={{color:"red"}}>{error}</div> }
+        
     </div>
   )
 }
